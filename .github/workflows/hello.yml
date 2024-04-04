@@ -6,9 +6,23 @@ on:
       - main
 
 jobs:
-  hello_world_job:
+  helloWorldJob:
     runs-on: ubuntu-20.04
     steps:
       - name: Say hello
         run: |
           echo "Hello World!"
+
+  dateJob:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Date of today
+        run: |
+          date
+
+  directoryContent:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Print content
+        run: |
+          ls -l
