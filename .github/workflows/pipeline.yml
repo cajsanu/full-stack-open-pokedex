@@ -23,7 +23,7 @@ jobs:
       - name: Run build
         run: npm run build
       - name: Test
-        run: npm run test
+        run: npm run test 
       - name: e2e tests
         uses: cypress-io/github-action@v5
         with:
@@ -34,6 +34,22 @@ jobs:
         if: ${{ github.event_name == 'push' && !(contains(join(github.event.commits.*.message), 'skip')) }}
         #push is the event when a pull request is being merged to main && if the commit message contains skip then don't merge
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_DEPLOY_HOOK_SRV }}?key=${{ secrets.RENDER_DEPLOY_HOOK_KEY }}
+      - name: Test Success
+        uses: rjstone/discord-webhook-notify@v1
+        if: success()
+        with:
+            severity: info
+            details: New version deployed!
+            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Test Failure
+        uses: rjstone/discord-webhook-notify@v1
+        if: failure()
+        with:
+            severity: error
+            details: Build Failed!
+            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+
+
   tag_release:
     needs: [simple_deployment_pipeline]
     runs-on: ubuntu-22.04
