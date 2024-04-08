@@ -8,7 +8,7 @@ describe("Pokedex", function () {
   });
   it("navigating to single pokemon page works", () => {
     cy.visit("http://localhost:5001");
-    cy.contains("ivysaur").click();
+    cy.contains("ivysaurus").click();
     cy.contains("chlorophyll")
   });
 });
