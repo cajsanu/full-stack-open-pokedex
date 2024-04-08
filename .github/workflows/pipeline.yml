@@ -8,6 +8,8 @@ on:
     branches: [main]
     types: [opened, synchronize]
 
+# run on both push and pull
+
 jobs:
   simple_deployment_pipeline:
     runs-on: ubuntu-22.04
