@@ -1,0 +1,24 @@
+name: Periodic workflow
+
+# on:
+#     schedule:
+#       - cron: '30 5 * * 1,3'
+#       - cron: '30 5 * * 2,4'
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+
+jobs:
+  simple_health_check:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check the deployed service URL
+        uses: jtalk/url-health-check-action@v4
+        with:
+          # Check the following URLs one by one sequentially
+          url: https://full-stack-open-pokedex-kbcu.onrender.com/
+      - name: Healthcheck passes
+        if: ${{ success() }}
+        run: echo "Website healthy"
